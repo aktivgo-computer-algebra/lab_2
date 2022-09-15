@@ -1,7 +1,11 @@
+import math
+
 import helper
 
 
 def validate(alphabet: [str], a: int):
+    if a == 0:
+        raise Exception("a is equal 0")
     if not helper.is_mutually_simple(len(alphabet), a):
         raise Exception("|A| and 'a' not are mutually simple")
 
@@ -25,7 +29,7 @@ class Cesar:
     def encode_by_formula(self, message: str) -> str:
         result = ""
         for s in message:
-            result += self.alphabet[(self.alphabet.index(s) * self.a + self.b) % len(self.alphabet)]
+            result += self.alphabet[(self.a * self.alphabet.index(s) + self.b) % len(self.alphabet)]
         return result
 
     def encode_by_permutation(self, message: str) -> str:
@@ -36,9 +40,10 @@ class Cesar:
 
     def decode_by_formula(self, message: str) -> str:
         result = ""
+        inverse_a = helper.get_inverse_number_in_ring_modulo(self.a, len(self.alphabet))
         for s in message:
             result += self.alphabet[
-                (int(1 / self.a) * (self.alphabet.index(s) + len(self.alphabet) - self.b)) % len(self.alphabet)
+                inverse_a * (self.alphabet.index(s) - self.b) % len(self.alphabet)
             ]
         return result
 
