@@ -9,13 +9,12 @@ class Vigenor:
 
     def encode(self, message: str) -> str:
         result = ""
-        for i in range(0, len(message) - 1):
+        for i in range(len(message)):
             result += self.permutations[i % len(self.permutations)][self.alphabet.index(message[i])]
-
         return result
 
     def decode(self, message: str) -> str:
         result = ""
-        for i in range(0, len(message) - 1):
-            result += self.permutations[i % len(self.permutations)][self.alphabet.index(message[i])]
+        for i in range(len(message)):
+            result += self.alphabet[self.permutations[i % len(self.permutations)].index(message[i])]
         return result
